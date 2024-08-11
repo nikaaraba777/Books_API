@@ -1,0 +1,371 @@
+{
+	"info": {
+		"_postman_id": "8772eb3f-1a24-4cbb-a88f-7f3258f1ee05",
+		"name": "Homework",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31767724",
+		"_collection_link": "https://grey-desert-136684.postman.co/workspace/recruit-0928~02c40a81-17ec-4efe-b06e-8c793cf5ce0f/collection/31767724-8772eb3f-1a24-4cbb-a88f-7f3258f1ee05?action=share&source=collection_link&creator=31767724"
+	},
+	"item": [
+		{
+			"name": "get all positions",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"pm.environment.set(\"city\",jsonData[jsonData.length-1].city)",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{HomeURL}}/positions",
+					"host": [
+						"{{HomeURL}}"
+					],
+					"path": [
+						"positions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "adminlogin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"pm.environment.set(\"adminToken\", jsonData.token)",
+							"",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\":\"{{adminemail}}\",\n  \"password\": \"{{adminpassword}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{HomeURL1}}/login",
+					"host": [
+						"{{HomeURL1}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create new position",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"pm.environment.set(\"last_position_Id\", jsonData.id)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{adminToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"title\": \"QA\",\n  \"address\": \"1712 aspen dr\",\n  \"city\": \"plainsboro\",\n  \"state\": \"NJ\",\n  \"zip\": \"08536\",\n  \"description\": \"QA manual testet\",\n  \"dateOpen\": \"2023-12-12\",\n  \"company\": \"superQA\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{HomeURL1}}/positions",
+					"host": [
+						"{{HomeURL1}}"
+					],
+					"path": [
+						"positions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get the last created position info with id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{HomeURL1}}/positions/{{last_position_Id}}",
+					"host": [
+						"{{HomeURL1}}"
+					],
+					"path": [
+						"positions",
+						"{{last_position_Id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update the single position",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{adminToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \n    \"title\": \"QAaq\",\n    \"address\": \"1712 aspen dr\",\n    \"city\": \"plainsboro\",\n    \"state\": \"NJ\",\n    \"zip\": \"08536\",\n    \"description\": \"QA manual testet\",\n    \"dateOpen\": \"2023-12-12\",\n    \"company\": \"superQA\"\n   \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{HomeURL1}}/positions/{{last_position_Id}}",
+					"host": [
+						"{{HomeURL1}}"
+					],
+					"path": [
+						"positions",
+						"{{last_position_Id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "patch_minor_mistake_in_position",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{adminToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \n    \"title\": \"QA\",\n    \"address\": \"1712 aspen dr\",\n    \"city\": \"plainsboro\",\n    \"state\": \"NJ\",\n    \"zip\": \"08536\",\n    \"description\": \"QA manual testet\",\n    \"dateOpen\": \"2023-12-12\",\n    \"company\": \"superQA\"\n   \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{HomeURL1}}/positions/{{last_position_Id}}",
+					"host": [
+						"{{HomeURL1}}"
+					],
+					"path": [
+						"positions",
+						"{{last_position_Id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete_position",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"your position has been deleted\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{adminToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{HomeURL1}}/positions/{{last_position_Id}}",
+					"host": [
+						"{{HomeURL1}}"
+					],
+					"path": [
+						"positions",
+						"{{last_position_Id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "register_a_candidate",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData=pm.response.json();",
+							"pm.environment.set(\"candidateId\",jsonData.id)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "     {\n        \"firstName\": \"John\",\n        \"middleName\": null,\n        \"lastName\": \"Doe\",\n        \"email\": \"a@n.com\",\n        \"password\":\"12345678\",\n        \"address\": \"4970 El Camino Real\",\n        \"city\": \"Los Altos\",\n        \"state\": \"CA\",\n        \"zip\": \"94022\",\n        \"summary\": \"Proven work experience as a Talent Acquisition Specialist or similar role. Hands-on experience with full-cycle recruiting using various interview techniques and evaluation methods\"\n        \n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{HomeURL1}}/candidates",
+					"host": [
+						"{{HomeURL1}}"
+					],
+					"path": [
+						"candidates"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete_candidate",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"candidate succesfully deleted\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{adminToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{HomeURL1}}/candidates/{{candidateId}}",
+					"host": [
+						"{{HomeURL1}}"
+					],
+					"path": [
+						"candidates",
+						"{{candidateId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "HomeURL",
+			"value": "http://recruit-qa.portnov.com/recruit/api/v1"
+		}
+	]
+}
